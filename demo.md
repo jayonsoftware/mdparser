@@ -1,3 +1,5 @@
+[You Tube Sample](https://www.youtube.com/watch?v=pTB0EiLXUC8)
+
 # Apex Syntax
 
 Objective: At end of the lesson students will be able to:
@@ -16,7 +18,7 @@ Please complete the following Trailheads before the start of the class
 
 Optional: YouTube Videos to Watch, Blogs, and Documents to Read
 
-[https://www.youtube.com/watch?v=pTB0EiLXUC8](https://www.youtube.com/watch?v=pTB0EiLXUC8)
+
 
 [Data Types and Variables | Apex Developer Guide | Salesforce Developers](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/langCon_apex_datatypes_variables_intro.htm)
 
