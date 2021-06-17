@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Renderers.Html.Inlines;
 using Markdig.Syntax.Inlines;
+using Scriban;
 
 namespace Mdparser12
 {
@@ -76,18 +78,30 @@ namespace Mdparser12
 						title = "Youtube video player";
 					}
 
-					// <iframe width="560" height="315" src="embedLink" title="title" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					renderer.Write("<iframe width=\"560\" height=\"315\" src=\"");
-					renderer.WriteEscapeUrl(embedLink);
-					renderer.Write("\" title=\"");
-					renderer.WriteEscape(title);
-					renderer.Write("\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
-				}
+                    
+                    renderer.Write(LinkRenderer("YouTube", title, embedLink));
+                }
 				else
 				{
 					base.Write(renderer, link);
 				}
 			}
+
+            public string LinkRenderer(String linkType, String title, String embedlink)
+            {
+                if (linkType == "YouTube")
+                {
+					var lmTemplate = File.ReadAllText("YouTube.sbnhtml");
+                    var template = Template.Parse(lmTemplate);
+                    var result = template.Render(new { embedlink, title});
+                    return result;
+                }
+                else
+                {
+                    return "<a href=\""+ embedlink + "\">"+ title +"link text" + "</a>";
+
+                }
+            }
 		}
 	}
 }
