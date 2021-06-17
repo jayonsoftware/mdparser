@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MdMarkdig\src\Markdig\Markdig.csproj" />
+    <PackageReference Include="Markdig" Version="0.25.0" />
   </ItemGroup>
 
   <ItemGroup>

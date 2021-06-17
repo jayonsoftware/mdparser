@@ -58,7 +58,7 @@ namespace Mdparser12
 						{
 							if (part.StartsWith("v=", StringComparison.OrdinalIgnoreCase))
 							{
-								embedLink = $"https://www.youtube.com/embed/{part.Substring(2).Trim()}";
+								embedLink = $"https://www.youtube.com/embed/{part[2..].Trim()}";
 							}
 						}
 					}

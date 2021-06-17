@@ -9,7 +9,7 @@ namespace Mdparser12
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             var mdFile = File.ReadAllText("test.md");
             var pipeline = new MarkdownPipelineBuilder()
@@ -21,7 +21,7 @@ namespace Mdparser12
             var html = Markdown.ToHtml(ast, pipeline);
 
             Console.WriteLine(html);
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }
