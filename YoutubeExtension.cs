@@ -64,7 +64,17 @@ namespace Mdparser12
 					}
 
 					// display optional title
-					var title = string.IsNullOrWhiteSpace(link.Title) ? "YouTube video player" : link.Title.Trim();
+					var title = link.Title;
+					if (string.IsNullOrWhiteSpace(title) && link.LastChild is LiteralInline text)
+					{
+						title = text.Content.ToString();
+					}
+
+					// fall back to the default title
+					if (string.IsNullOrWhiteSpace(title))
+					{
+						title = "Youtube video player";
+					}
 
 					// <iframe width="560" height="315" src="embedLink" title="title" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					renderer.Write("<iframe width=\"560\" height=\"315\" src=\"");
