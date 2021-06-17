@@ -2,11 +2,11 @@
 
 # Apex Syntax
 
-Objective: At end of the lesson students will be able to:
+## Objective: At end of the lesson students will be able to:
 
 - Students will be able to understand APEX code
 
-Topics
+## Topics
 
 1. Data Types and Variables
 2. Control Flow Statements

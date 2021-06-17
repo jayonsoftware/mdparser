@@ -14,25 +14,22 @@ namespace Mdparser12
             var mdFile = File.ReadAllText("demo.md");
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             var astMarkdownDocument = Markdown.Parse(mdFile, pipeline);
-            // display table of contents for the parsed markdown file
-            var titles = astMarkdownDocument.Descendants<Markdig.Syntax.MarkdownObject>().ToList();
+
+            // display table of contents
+            var titles = astMarkdownDocument.Descendants<HeadingBlock>().ToList();
             foreach (var title in titles)
             {
-
-                if (title is ParagraphBlock)
+                if (title.Inline.FirstChild is LiteralInline inline)
                 {
+                    // use Level property to display indent
+                    Console.Write(new string('-', title.Level) + ">");
 
-                    var paragrap = (ParagraphBlock) title;
-
-                    if (paragrap.Inline.FirstChild.GetType())
-                    {
-                        
-                    }
-
-                    
+                    // node text
+                    Console.WriteLine(inline.Content);
                 }
             }
 
+            Console.ReadLine();
         }
     }
 }
