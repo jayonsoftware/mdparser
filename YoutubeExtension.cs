@@ -63,10 +63,15 @@ namespace Mdparser12
 						}
 					}
 
-					// <iframe width="560" height="315" src="embedLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					// display optional title
+					var title = string.IsNullOrWhiteSpace(link.Title) ? "YouTube video player" : link.Title.Trim();
+
+					// <iframe width="560" height="315" src="embedLink" title="title" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					renderer.Write("<iframe width=\"560\" height=\"315\" src=\"");
 					renderer.WriteEscapeUrl(embedLink);
-					renderer.Write("\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
+					renderer.Write("\" title=\"");
+					renderer.WriteEscape(title);
+					renderer.Write("\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
 				}
 				else
 				{
