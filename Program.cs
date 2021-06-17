@@ -11,25 +11,17 @@ namespace Mdparser12
     {
         static void Main(string[] args)
         {
-            var mdFile = File.ReadAllText("demo.md");
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            var astMarkdownDocument = Markdown.Parse(mdFile, pipeline);
+            var mdFile = File.ReadAllText("test.md");
+            var pipeline = new MarkdownPipelineBuilder()
+                .Use<YoutubeExtension>()
+                .UseAdvancedExtensions()
+                .Build();
 
-            // display table of contents
-            var titles = astMarkdownDocument.Descendants<HeadingBlock>().ToList();
-            foreach (var title in titles)
-            {
-                if (title.Inline.FirstChild is LiteralInline inline)
-                {
-                    // use Level property to display indent
-                    Console.Write(new string('-', title.Level) + ">");
+            var ast = Markdown.Parse(mdFile, pipeline);
+            var html = Markdown.ToHtml(ast, pipeline);
 
-                    // node text
-                    Console.WriteLine(inline.Content);
-                }
-            }
-
-            Console.ReadLine();
+            Console.WriteLine(html);
+            //Console.ReadLine();
         }
     }
 }
