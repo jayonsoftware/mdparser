@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.16.0" />
     <PackageReference Include="Markdig" Version="0.25.0" />
     <PackageReference Include="Scriban" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="demo.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="demo.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
