@@ -6,6 +6,7 @@ using AngleSharp.Html.Parser;
 using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
+using Newtonsoft.Json;
 using Scriban;
 
 namespace Mdparser12
@@ -30,20 +31,23 @@ namespace Mdparser12
                 var html = element.InnerHtml;
                 if (html.Contains("class=\"source\""))
                 {
-                    //ToDo: call LinkRenderer, get the text and replace this element ?.
-                    //Console.WriteLine("Its You Tube");
+                    //ToDo: Find the link and text
+                    //ToDo: call LinkRenderer method below, get the text and replace this element ?.
+               
                 }
                 else if (html.Contains("class=\"bookmark-info\"")) {
 
                     foreach (var elementChildNode in element.ChildNodes)
                     {
-                        Console.WriteLine(elementChildNode.NodeType);
-                        Console.WriteLine(elementChildNode.TextContent);
+                       // Console.WriteLine(elementChildNode.NodeType);
+                       // Console.WriteLine(elementChildNode.TextContent);
                     }
 
                     //Console.WriteLine("Its A book mark");
                 }
             }
+
+            //Todo: Save the html...for now save to another file other then the source file
          
 
             //var mdFile = File.ReadAllText("test.md");
