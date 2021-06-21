@@ -16,12 +16,6 @@
     <None Update="demo.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="demo.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="test.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="YouTube.sbnhtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

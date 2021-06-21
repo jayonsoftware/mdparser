@@ -1,44 +1,57 @@
-﻿<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DemoJay</title>
-</head>
-<body>
+﻿<body>
     <article id="fbddbc00-42d9-4950-bb74-84161493958a" class="page sans">
         <header>
-            <h1 class="page-title">DemoJay</h1>
+            <h1 class="page-title">Demo Jay</h1>
         </header>
         <div class="page-body">
             <figure id="3fbff5d0-4249-4165-a037-760f2d86d699">
                 <div class="source"><a href="https://www.youtube.com/watch?v=oYrNZGQ2mu0">https://www.youtube.com/watch?v=oYrNZGQ2mu0</a></div>
             </figure>
-            <p id="35ad9622-ea58-457d-9252-ad75f8458970" class=""></p>
-            <figure id="e3c80299-3b9a-476f-97d7-c674ba20e841">
-                <a href="https://www.youtube.com/watch?v=oYrNZGQ2mu0" class="bookmark source">
-                    <div class="bookmark-info">
-                        <div class="bookmark-text">
-                            <div class="bookmark-title">Welcome to Streak</div>
-                            <div class="bookmark-description">https://www.streak.com/Streak helps you organize your emails and manage business processes with boxes and pipelines. In this overview video, we&#x27;ll show you h...</div>
-                        </div>
-                        <div class="bookmark-href"><img src="https://www.youtube.com/s/desktop/826a344e/img/favicon.ico" class="icon bookmark-icon" />https://www.youtube.com/watch?v=oYrNZGQ2mu0</div>
-                    </div>
-                    <img src="https://i.ytimg.com/vi/oYrNZGQ2mu0/hqdefault.jpg" class="bookmark-image" />
-                </a>
-            </figure>
-            <p id="54f9be88-7e0a-4bf9-93e9-c9c0e1e3ad2c" class=""></p>
-            <figure id="e109057a-3367-44a9-8e1f-a45e6e8ca00f">
-                <a href="https://developer.salesforce.com/" class="bookmark source">
-                    <div class="bookmark-info">
-                        <div class="bookmark-text">
-                            <div class="bookmark-title">Salesforce Developers | API Documentation, Developer Forums &amp; More</div>
-                            <div class="bookmark-description">The Salesforce Platform connects the entire customer journey across Sales, Service, Marketing, Commerce, and every touchpoint. Trailblazers like you deliver continuous innovation using powerful tools built right into one customer success platform, including modern app development practices, analytics, AI, and secure data integration. Learn more.</div>
-                        </div>
-                        <div class="bookmark-href"><img src="https://developer.saleforce.com/resources2/favicon.ico" class="icon bookmark-icon" />https://developer.salesforce.com/</div>
-                    </div>
-                    <img src="https://d259t2jj6zp7qm.cloudfront.net/images/20200831112100/Salesforce-Developers-Opengraph.gif" class="bookmark-image" />
-                </a>
-            </figure>
+            <p id="35ad9622-ea58-457d-9252-ad75f8458970" class="">
+            </p>
+            <div id="c3569d7f-ffac-46f5-80d7-d166cae69902" class="column-list">
+                <div id="75ed5e89-f244-40cc-b917-19c11e03d7ad" style="width:50%" class="column">
+                    <figure id="e3c80299-3b9a-476f-97d7-c674ba20e841">
+                        <a href="https://www.youtube.com/watch?v=oYrNZGQ2mu0" class="bookmark source">
+                            <div class="bookmark-info">
+                                <div class="bookmark-text">
+                                    <div class="bookmark-title">Welcome to Streak</div>
+                                    <div class="bookmark-description">https://www.streak.com/Streak helps you organize your emails and manage business processes with boxes and pipelines. In this overview video, we&#x27;ll show you h...</div>
+                                </div>
+                                <div class="bookmark-href"><img src="https://www.youtube.com/s/desktop/826a344e/img/favicon.ico" class="icon bookmark-icon" />https://www.youtube.com/watch?v=oYrNZGQ2mu0</div>
+                            </div><img src="https://i.ytimg.com/vi/oYrNZGQ2mu0/hqdefault.jpg" class="bookmark-image" />
+                        </a>
+                    </figure>
+                </div>
+                <div id="f7474b99-83b0-4500-a349-dd38c4c0341e" style="width:50%" class="column">
+                    <figure id="e109057a-3367-44a9-8e1f-a45e6e8ca00f">
+                        <a href="https://developer.salesforce.com/" class="bookmark source">
+                            <div class="bookmark-info">
+                                <div class="bookmark-text">
+                                    <div class="bookmark-title">Salesforce Developers | API Documentation, Developer Forums &amp; More</div>
+                                    <div class="bookmark-description">The Salesforce Platform connects the entire customer journey across Sales, Service, Marketing, Commerce, and every touchpoint. Trailblazers like you deliver continuous innovation using powerful tools built right into one customer success platform, including modern app development practices, analytics, AI, and secure data integration. Learn more.</div>
+                                </div>
+                                <div class="bookmark-href"><img src="https://developer.saleforce.com/resources2/favicon.ico" class="icon bookmark-icon" />https://developer.salesforce.com/</div>
+                            </div><img src="https://d259t2jj6zp7qm.cloudfront.net/images/20200831112100/Salesforce-Developers-Opengraph.gif" class="bookmark-image" />
+                        </a>
+                    </figure>
+                </div>
+            </div>
+            <pre id="70b4aa90-37f5-4df9-90ba-b77426b3b803" class="code"><code>public static string LinkRenderer(String linkType, String title, String embedlink)
+{
+  if (linkType == &quot;YouTube&quot;)
+  {
+      var lmTemplate = File.ReadAllText(&quot;YouTube.sbnhtml&quot;);
+      var template = Template.Parse(lmTemplate);
+      var result = template.Render(new { embedlink, title });
+      return result;
+  }
+  else
+  {
+      return &quot;&lt;a href=\&quot;&quot; + embedlink + &quot;\&quot;&gt;&quot; + title + &quot;link text&quot; + &quot;&lt;/a&gt;&quot;;
+
+  }
+}</code></pre>
         </div>
     </article>
 </body>
-</html>

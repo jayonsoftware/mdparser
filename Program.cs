@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using AngleSharp;
+using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using Markdig;
 using Markdig.Syntax;
@@ -25,56 +26,62 @@ namespace Mdparser12
             var parser = context.GetService<IHtmlParser>();
             var document = parser.ParseDocument(source);
 
-            var elements = document.QuerySelectorAll("figure");
-            foreach (var element in elements)
+            var elements = document.QuerySelector("div");
+            Console.WriteLine(elements.Id);
+
+            foreach (var elementsChildNode in elements.ChildNodes)
             {
-                var html = element.InnerHtml;
-                if (html.Contains("class=\"source\""))
-                {
-                    //ToDo: Find the link and text
-                    //ToDo: call LinkRenderer method below, get the text and replace this element ?.
-               
-                }
-                else if (html.Contains("class=\"bookmark-info\"")) {
-
-                    foreach (var elementChildNode in element.ChildNodes)
-                    {
-                       // Console.WriteLine(elementChildNode.NodeType);
-                       // Console.WriteLine(elementChildNode.TextContent);
-                    }
-
-                    //Console.WriteLine("Its A book mark");
-                }
+                Console.WriteLine(elementsChildNode);
             }
 
+            Console.WriteLine();
+            //foreach (var element in elements)
+            //{
+            //    var html = element.InnerHtml;
+            //    Console.WriteLine(html);
+            //    Console.WriteLine("*******************************************************");
+
+            //    //if (html.Contains("class=\"source\""))
+            //{
+            //    //ToDo: Find the link and text
+            //    //ToDo: call LinkRenderer method below, get the text and replace this element ?.
+
+            //}
+            //else if (html.Contains("class=\"bookmark-info\"")) {
+
+            //    foreach (var elementChildNode in element.ChildNodes)
+            //    {
+            //       // Console.WriteLine(elementChildNode.NodeType);
+            //       // Console.WriteLine(elementChildNode.TextContent);
+            //    }
+
+            //    //Console.WriteLine("Its A book mark");
+            //}
+            //}
+
             //Todo: Save the html...for now save to another file other then the source file
-         
 
-            //var mdFile = File.ReadAllText("test.md");
-            //var pipeline = new MarkdownPipelineBuilder()
-            //    .Use<YoutubeExtension>()
-            //    .UseAdvancedExtensions()
-            //    .Build();
 
-            //var ast = Markdown.Parse(mdFile, pipeline);
-            //var html = Markdown.ToHtml(ast, pipeline);
 
-            //Console.WriteLine(html);
+            //
             Console.ReadLine();
         }
 
-        public static string LinkRenderer(String linkType, String title, String embedlink)
+
+        // All Link is managed here, returnes an html back
+        public static string LinkRenderer(Link link)
         {
+            var linkType = "YouTube";
             if (linkType == "YouTube")
             {
                 var lmTemplate = File.ReadAllText("YouTube.sbnhtml");
                 var template = Template.Parse(lmTemplate);
-                var result = template.Render(new { embedlink, title });
+                var result = template.Render(new { link.URL, link.Description }); ;
                 return result;
             }
             else
             {
-                return "<a href=\"" + embedlink + "\">" + title + "link text" + "</a>";
+                return "<a href=\"" + link.URL + "\">" + link.Description + "link text" + "</a>";
 
             }
         }
