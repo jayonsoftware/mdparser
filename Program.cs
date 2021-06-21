@@ -1,75 +1,87 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
-using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 using Newtonsoft.Json;
 using Scriban;
+using Scriban.Syntax;
 
 namespace Mdparser12
 {
     class Program
     {
+        static void NodeParser(INode node)
+        {
+            Console.WriteLine(node.NodeType);
+            var nextNode = node.NextSibling;
+            if (nextNode == null)
+            {
+                return;
+            }
+            NodeParser(nextNode);
+        }
         static void Main(string[] _)
         {
+            var source = File.ReadAllText("demo.html");
+            var notionNode = GetNotionNodes(source);
+            Console.WriteLine();
+            Console.WriteLine(JsonConvert.SerializeObject(notionNode, Formatting.Indented));
+            Console.ReadLine();
+        }
+
+        // Given an html, parse it and return a List<Node> 
+        public static List<Node> GetNotionNodes(string html)
+        {
+            var notionNodes = new List<Node>();
+
             //Use the default configuration for AngleSharp
             var config = Configuration.Default;
 
             //Create a new context for evaluating webpages with the given config
             var context = BrowsingContext.New(config);
-
-            var source = File.ReadAllText("demo.html");
             var parser = context.GetService<IHtmlParser>();
-            var document = parser.ParseDocument(source);
+            var document = parser.ParseDocument(html);
 
             var elements = document.QuerySelector("div");
-            Console.WriteLine(elements.Id);
 
             foreach (var elementsChildNode in elements.ChildNodes)
             {
-                Console.WriteLine(elementsChildNode);
+                if (elementsChildNode.NodeType == NodeType.Element)
+                {
+                    var elementNode = (Element)elementsChildNode;
+                    Console.WriteLine("> " + elementNode.Id);
+                    Console.WriteLine(">> " + elementNode.ClassName);
+                    foreach (var chileNode in elementNode.Children)
+                    {
+                        Console.WriteLine(">>> " + chileNode.NodeType);
+                        Console.WriteLine(">>>> " + chileNode.ClassName);
+                        if (chileNode.ClassName == "source")
+                        {
+                            var newSource = new Source(elementNode.Id);
+                            notionNodes.Add(newSource);
+                        }
+                    }
+
+                }
             }
 
-            Console.WriteLine();
-            //foreach (var element in elements)
-            //{
-            //    var html = element.InnerHtml;
-            //    Console.WriteLine(html);
-            //    Console.WriteLine("*******************************************************");
-
-            //    //if (html.Contains("class=\"source\""))
-            //{
-            //    //ToDo: Find the link and text
-            //    //ToDo: call LinkRenderer method below, get the text and replace this element ?.
-
-            //}
-            //else if (html.Contains("class=\"bookmark-info\"")) {
-
-            //    foreach (var elementChildNode in element.ChildNodes)
-            //    {
-            //       // Console.WriteLine(elementChildNode.NodeType);
-            //       // Console.WriteLine(elementChildNode.TextContent);
-            //    }
-
-            //    //Console.WriteLine("Its A book mark");
-            //}
-            //}
-
-            //Todo: Save the html...for now save to another file other then the source file
+            return notionNodes;
+        }
 
 
+        public string RepalceHtml(string html, string nodeId, string htmlBlock)
+        {
 
-            //
-            Console.ReadLine();
+            //Todo : Append the given html to the correct postion. 
+            return html;
         }
 
 
         // All Link is managed here, returnes an html back
-        public static string LinkRenderer(Link link)
+        public static string LinkRenderer(Source link)
         {
             var linkType = "YouTube";
             if (linkType == "YouTube")

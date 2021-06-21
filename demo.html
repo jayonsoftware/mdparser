@@ -5,10 +5,11 @@
         </header>
         <div class="page-body">
             <figure id="3fbff5d0-4249-4165-a037-760f2d86d699">
-                <div class="source"><a href="https://www.youtube.com/watch?v=oYrNZGQ2mu0">https://www.youtube.com/watch?v=oYrNZGQ2mu0</a></div>
+                <div class="source">
+                    <a href="https://www.youtube.com/watch?v=oYrNZGQ2mu0">https://www.youtube.com/watch?v=oYrNZGQ2mu0</a>
+                </div>
             </figure>
-            <p id="35ad9622-ea58-457d-9252-ad75f8458970" class="">
-            </p>
+ 
             <div id="c3569d7f-ffac-46f5-80d7-d166cae69902" class="column-list">
                 <div id="75ed5e89-f244-40cc-b917-19c11e03d7ad" style="width:50%" class="column">
                     <figure id="e3c80299-3b9a-476f-97d7-c674ba20e841">
@@ -37,21 +38,24 @@
                     </figure>
                 </div>
             </div>
-            <pre id="70b4aa90-37f5-4df9-90ba-b77426b3b803" class="code"><code>public static string LinkRenderer(String linkType, String title, String embedlink)
-{
-  if (linkType == &quot;YouTube&quot;)
-  {
-      var lmTemplate = File.ReadAllText(&quot;YouTube.sbnhtml&quot;);
-      var template = Template.Parse(lmTemplate);
-      var result = template.Render(new { embedlink, title });
-      return result;
-  }
-  else
-  {
-      return &quot;&lt;a href=\&quot;&quot; + embedlink + &quot;\&quot;&gt;&quot; + title + &quot;link text&quot; + &quot;&lt;/a&gt;&quot;;
 
-  }
-}</code></pre>
+            <pre id="70b4aa90-37f5-4df9-90ba-b77426b3b803" class="code">
+                <code>public static string LinkRenderer(String linkType, String title, String embedlink)
+                {
+                  if (linkType == &quot;YouTube&quot;)
+                  {
+                      var lmTemplate = File.ReadAllText(&quot;YouTube.sbnhtml&quot;);
+                      var template = Template.Parse(lmTemplate);
+                      var result = template.Render(new { embedlink, title });
+                      return result;
+                  }
+                  else
+                  {
+                      return &quot;&lt;a href=\&quot;&quot; + embedlink + &quot;\&quot;&gt;&quot; + title + &quot;link text&quot; + &quot;&lt;/a&gt;&quot;;
+
+                  }
+                }</code>
+</pre>
         </div>
     </article>
 </body>
