@@ -26,7 +26,7 @@ namespace Mdparser12
 			var document = parser.ParseDocument(html);
 
 			// find all youtube links
-			var links = document.All.Where(n => n.LocalName == "a").ToList();
+			var links = document.All.OfType<IHtmlAnchorElement>().ToList();
 			foreach (var link in links)
 			{
 				// skip non-youtube links
@@ -41,7 +41,7 @@ namespace Mdparser12
 				var fragment = RenderYoutubeLink(source);
 				var nodes = parser.ParseFragment(fragment, link);
 
-				// replace the link with the rendered
+				// replace the link with the rendered fragment
 				link.ReplaceWith(nodes.ToArray());
 			}
 
@@ -54,18 +54,15 @@ namespace Mdparser12
 		/// <summary>
 		/// Detects if the given HTML element is a youtube link and if it's so, produces a model class out of it.
 		/// </summary>
-		private static Source PrepareYoutubeVideo(IElement element)
+		private static Source PrepareYoutubeVideo(IHtmlAnchorElement link)
 		{
-			if (element is IHtmlAnchorElement link)
+			if (link.Href.Contains("youtube.com", IgnoreCase) || link.Href.Contains("youtu.be", IgnoreCase))
 			{
-				if (link.Href.Contains("youtube.com", IgnoreCase) || link.Href.Contains("youtu.be", IgnoreCase))
-				{
-					// note: links don't have their own Ids
-					var src = new Source(string.Empty);
-					src.Description = link.Title ?? "Youtube video player";
-					src.URL = GetYoutubeEmbedLink(link.Href);
-					return src;
-				}
+				// note: links don't have their own Ids
+				var src = new Source(string.Empty);
+				src.Description = link.Title ?? "Youtube video player";
+				src.URL = GetYoutubeEmbedLink(link.Href);
+				return src;
 			}
 
 			return null;
