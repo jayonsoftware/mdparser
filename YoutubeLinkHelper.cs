@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using Markdig;
-using Markdig.Renderers;
-using Markdig.Renderers.Html.Inlines;
-using Markdig.Syntax.Inlines;
 using Scriban;
 
 namespace Mdparser12
@@ -55,16 +49,16 @@ namespace Mdparser12
 			return document.DocumentElement.OuterHtml;
 		}
 
+		private static StringComparison IgnoreCase => StringComparison.OrdinalIgnoreCase;
+
 		/// <summary>
 		/// Detects if the given HTML element is a youtube link and if it's so, produces a model class out of it.
 		/// </summary>
 		private static Source PrepareYoutubeVideo(IElement element)
 		{
-			var ignoreCase = StringComparison.OrdinalIgnoreCase;
 			if (element is IHtmlAnchorElement link)
 			{
-				if (link.Href.Contains("youtube.com", ignoreCase) ||
-					link.Href.Contains("youtu.be", ignoreCase))
+				if (link.Href.Contains("youtube.com", IgnoreCase) || link.Href.Contains("youtu.be", IgnoreCase))
 				{
 					// note: links don't have their own Ids
 					var src = new Source(string.Empty);
@@ -87,7 +81,7 @@ namespace Mdparser12
 			var url = new UriBuilder(linkUrl);
 
 			// assume something like https://youtu.be/HeQX2HjkcNo
-			if (url.Host.Contains("youtu.be", StringComparison.OrdinalIgnoreCase))
+			if (url.Host.Contains("youtu.be", IgnoreCase))
 			{
 				embedLink = $"https://www.youtube.com/embed{url.Path}";
 			}
@@ -96,7 +90,7 @@ namespace Mdparser12
 				var queryParts = url.Query.Trim('?').Split('&');
 				foreach (var part in queryParts)
 				{
-					if (part.StartsWith("v=", StringComparison.OrdinalIgnoreCase))
+					if (part.StartsWith("v=", IgnoreCase))
 					{
 						embedLink = $"https://www.youtube.com/embed/{part[2..].Trim()}";
 					}
