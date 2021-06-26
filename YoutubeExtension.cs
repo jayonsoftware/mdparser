@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -78,30 +78,30 @@ namespace Mdparser12
 						title = "Youtube video player";
 					}
 
-                    
-                    renderer.Write(LinkRenderer("YouTube", title, embedLink));
-                }
+
+					renderer.Write(LinkRenderer("YouTube", title, embedLink));
+				}
 				else
 				{
 					base.Write(renderer, link);
 				}
 			}
 
-            public string LinkRenderer(String linkType, String title, String embedlink)
-            {
-                if (linkType == "YouTube")
-                {
+			public string LinkRenderer(String linkType, String title, String embedlink)
+			{
+				if (linkType == "YouTube")
+				{
 					var lmTemplate = File.ReadAllText("YouTube.sbnhtml");
-                    var template = Template.Parse(lmTemplate);
-                    var result = template.Render(new { embedlink, title});
-                    return result;
-                }
-                else
-                {
-                    return "<a href=\""+ embedlink + "\">"+ title +"link text" + "</a>";
+					var template = Template.Parse(lmTemplate);
+					var result = template.Render(new { embedlink, title });
+					return result;
+				}
+				else
+				{
+					return "<a href=\"" + embedlink + "\">" + title + "link text" + "</a>";
 
-                }
-            }
+				}
+			}
 		}
 	}
 }
