@@ -5,6 +5,7 @@ using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
+using Newtonsoft.Json;
 using Scriban;
 
 namespace Mdparser12
@@ -59,9 +60,13 @@ namespace Mdparser12
 			if (link.Href.Contains("youtube.com", IgnoreCase) || link.Href.Contains("youtu.be", IgnoreCase))
 			{
 				// note: links don't have their own Ids
-				var src = new Source(string.Empty);
-				src.Description = link.Title ?? "Youtube video player";
-				src.URL = GetYoutubeEmbedLink(link.Href);
+				var src = new Source(string.Empty)
+				{
+					Description = link.Title ?? "Youtube video player", URL = GetYoutubeEmbedLink(link.Href)
+				};
+				string json = JsonConvert.SerializeObject(src, Formatting.Indented);
+				File.WriteAllText("json/demo.json", json);
+
 				return src;
 			}
 
@@ -102,7 +107,7 @@ namespace Mdparser12
 		/// </summary>
 		private static Lazy<Template> YoutubeTemplate { get; } = new Lazy<Template>(() =>
 		{
-			var lmTemplate = File.ReadAllText("YouTube.sbnhtml");
+			var lmTemplate = File.ReadAllText("in/sbnhtml/youtube.sbnhtml");
 			return Template.Parse(lmTemplate);
 		});
 

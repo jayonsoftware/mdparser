@@ -12,10 +12,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="demo.html">
+    <None Update="in\notion\demo.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="YouTube.sbnhtml">
+    <None Update="json\demo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="out\css\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="in\sbnhtml\youtube.sbnhtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="out\html\demo.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

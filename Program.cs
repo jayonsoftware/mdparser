@@ -17,9 +17,9 @@ namespace Mdparser12
 		static void Main(string[] _)
 		{
 			// parse demo.html, save result.html
-			var source = File.ReadAllText("demo.html");
+			var source = File.ReadAllText("in/notion/demo.html");
 			var result = YoutubeLinkHelper.ReplaceYoutubeLinks(source);
-			File.WriteAllText("result.html", result);
+			File.WriteAllText("out/html/demo.html", result);
 
 			Console.WriteLine(result);
 			Console.ReadLine();
