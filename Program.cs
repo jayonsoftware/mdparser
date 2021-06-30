@@ -20,10 +20,6 @@ namespace Mdparser12
 			var source = File.ReadAllText("in/notion/demo.html");
 			var result = YoutubeLinkHelper.ReplaceYoutubeLinks(source);
 			File.WriteAllText("out/html/demo.html", result);
-
-			Console.WriteLine("*****");
-			Console.WriteLine(result);
-			//Console.ReadLine();
 		}
 
 		static void NodeParser(INode node)
