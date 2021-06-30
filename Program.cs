@@ -21,8 +21,9 @@ namespace Mdparser12
 			var result = YoutubeLinkHelper.ReplaceYoutubeLinks(source);
 			File.WriteAllText("out/html/demo.html", result);
 
+			Console.WriteLine("*****");
 			Console.WriteLine(result);
-			Console.ReadLine();
+			//Console.ReadLine();
 		}
 
 		static void NodeParser(INode node)

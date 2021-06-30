@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Text;
@@ -18,9 +18,9 @@ namespace Mdparser12
         {
             this.Id = Id;
         }
-        public string Description { get; set; }
         public string URL { get; set; }
-    }
+        public string Description { get; set; }
+	}
 
     public class Column : Node
     {

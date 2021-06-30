@@ -26,8 +26,42 @@ namespace Mdparser12
 			var parser = context.GetService<IHtmlParser>();
 			var document = parser.ParseDocument(html);
 
+			var allLinks = document.All;
+			foreach (var link in allLinks)
+			{
+				if (!string.IsNullOrEmpty(link.Id) )
+				{
+					if (link.FirstElementChild != null && link.FirstElementChild.ClassName == "source" && link.TagName == "FIGURE")
+					{
+						var element = (IHtmlAnchorElement) link.FirstElementChild.FirstElementChild;
+						var source = new Source(link.Id) {URL = element.Href, Description = element.InnerHtml};
+
+						//Console.WriteLine(JsonConvert.SerializeObject(source, Formatting.Indented));
+
+						if (element.Href.Contains("youtube.com", IgnoreCase) || element.Href.Contains("youtu.be", IgnoreCase))
+						{
+
+							var lmTemplate = File.ReadAllText("in/sbnhtml/youtube.sbnhtml");
+							var template = Template.Parse(lmTemplate);
+							var result = template.Render(new {Id = source.Id, URL = source.URL, Description = source.Description});
+							//Console.WriteLine(result);
+
+							var nodes = parser.ParseFragment(result, link);
+							link.ReplaceWith(nodes.ToArray());
+						}
+
+						Console.WriteLine(document.DocumentElement.OuterHtml);
+
+						return document.DocumentElement.OuterHtml;
+					}
+				}
+			}
+
+			return null;
+
 			// find all youtube links
 			var links = document.All.OfType<IHtmlAnchorElement>().ToList();
+
 			foreach (var link in links)
 			{
 				// skip non-youtube links
@@ -38,17 +72,19 @@ namespace Mdparser12
 					continue;
 				}
 
-				// generate HTML fragment using the templating engine
-				var fragment = RenderYoutubeLink(source);
-				var nodes = parser.ParseFragment(fragment, link);
+				//// generate HTML fragment using the templating engine
+				//var fragment = RenderYoutubeLink(source);
+				//var nodes = parser.ParseFragment(fragment, link);
 
-				// replace the link with the rendered fragment
-				link.ReplaceWith(nodes.ToArray());
+				//// replace the link with the rendered fragment
+				//link.ReplaceWith(nodes.ToArray());
 			}
 
 			// render the modified document
 			return document.DocumentElement.OuterHtml;
 		}
+
+
 
 		private static StringComparison IgnoreCase => StringComparison.OrdinalIgnoreCase;
 
@@ -64,9 +100,6 @@ namespace Mdparser12
 				{
 					Description = link.Title ?? "Youtube video player", URL = GetYoutubeEmbedLink(link.Href)
 				};
-				string json = JsonConvert.SerializeObject(src, Formatting.Indented);
-				File.WriteAllText("json/demo.json", json);
-
 				return src;
 			}
 
