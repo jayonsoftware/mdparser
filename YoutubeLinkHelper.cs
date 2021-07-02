@@ -15,6 +15,8 @@ namespace Mdparser12
 	/// </summary>
 	public class YoutubeLinkHelper
 	{
+		private static StringComparison IgnoreCase => StringComparison.OrdinalIgnoreCase;
+
 		/// <summary>
 		/// Replaces links to Youtube videos with iframe code.
 		/// </summary>
@@ -34,59 +36,39 @@ namespace Mdparser12
 					if (link.FirstElementChild != null && link.FirstElementChild.ClassName == "source" && link.TagName == "FIGURE")
 					{
 						var element = (IHtmlAnchorElement) link.FirstElementChild.FirstElementChild;
-						var source = new Source(link.Id) {URL = element.Href, Description = element.InnerHtml};
-
-						//Console.WriteLine(JsonConvert.SerializeObject(source, Formatting.Indented));
-
-						if (element.Href.Contains("youtube.com", IgnoreCase) || element.Href.Contains("youtu.be", IgnoreCase))
+						if (element != null)
 						{
+							var source = new Source(link.Id) {URL = element.Href, Description = element.InnerHtml};
 
-							var lmTemplate = File.ReadAllText("in/sbnhtml/youtube.sbnhtml");
-							var template = Template.Parse(lmTemplate);
-							var result = template.Render(new {Id = source.Id, URL = source.URL, Description = source.Description});
-							//Console.WriteLine(result);
+							Console.WriteLine(JsonConvert.SerializeObject(source, Formatting.Indented));
 
-							var nodes = parser.ParseFragment(result, link);
-							link.ReplaceWith(nodes.ToArray());
+							if (element.Href.Contains("youtube.com", IgnoreCase) || element.Href.Contains("youtu.be", IgnoreCase))
+							{
+								var lmTemplate = File.ReadAllText("in/sbnhtml/youtube.sbnhtml");
+								var template = Template.Parse(lmTemplate);
+								var result = template.Render(new {Id = source.Id, URL = source.URL, Description = source.Description});
+								//Console.WriteLine(result);
+
+								var nodes = parser.ParseFragment(result, link);
+								link.ReplaceWith(nodes.ToArray());
+							} else if (element.Href.Contains("www.google.com/maps/", IgnoreCase))
+							{
+
+								var lmTemplate = File.ReadAllText("in/sbnhtml/googlemaps.sbnhtml");
+								var template = Template.Parse(lmTemplate);
+								var result = template.Render(new { Id = source.Id, URL = source.URL, Description = source.Description });
+								//Console.WriteLine(result);
+
+								var nodes = parser.ParseFragment(result, link);
+								link.ReplaceWith(nodes.ToArray());
+							}
 						}
-
-						Console.WriteLine(document.DocumentElement.OuterHtml);
-
-						return document.DocumentElement.OuterHtml;
+						
 					}
 				}
 			}
-
-			return null;
-
-			// find all youtube links
-			var links = document.All.OfType<IHtmlAnchorElement>().ToList();
-
-			foreach (var link in links)
-			{
-				// skip non-youtube links
-				var source = PrepareYoutubeVideo(link);
-				if (source == null)
-				{
-					// not a youtube link
-					continue;
-				}
-
-				//// generate HTML fragment using the templating engine
-				//var fragment = RenderYoutubeLink(source);
-				//var nodes = parser.ParseFragment(fragment, link);
-
-				//// replace the link with the rendered fragment
-				//link.ReplaceWith(nodes.ToArray());
-			}
-
-			// render the modified document
 			return document.DocumentElement.OuterHtml;
 		}
-
-
-
-		private static StringComparison IgnoreCase => StringComparison.OrdinalIgnoreCase;
 
 		/// <summary>
 		/// Detects if the given HTML element is a youtube link and if it's so, produces a model class out of it.
@@ -133,27 +115,6 @@ namespace Mdparser12
 			}
 
 			return embedLink;
-		}
-
-		/// <summary>
-		/// Lazy-evaluated Youtube iframe template.
-		/// </summary>
-		private static Lazy<Template> YoutubeTemplate { get; } = new Lazy<Template>(() =>
-		{
-			var lmTemplate = File.ReadAllText("in/sbnhtml/youtube.sbnhtml");
-			return Template.Parse(lmTemplate);
-		});
-
-		/// <summary>
-		/// Renders a Youtube iframe fragment.
-		/// </summary>
-		private static string RenderYoutubeLink(Source link)
-		{
-			return YoutubeTemplate.Value.Render(new
-			{
-				embedlink = link.URL,
-				title = link.Description
-			});
 		}
 	}
 }

@@ -15,13 +15,16 @@
     <None Update="in\notion\demo.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="in\sbnhtml\youtube.sbnhtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="json\demo.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="out\css\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="in\sbnhtml\youtube.sbnhtml">
+    <None Update="in\sbnhtml\googlemaps.sbnhtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="out\html\demo.html">
