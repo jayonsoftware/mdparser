@@ -31,6 +31,7 @@ namespace Mdparser12
 			var allLinks = document.All;
 			foreach (var link in allLinks)
 			{
+				// Todo: I dont think we are parsing the correct way, also the embeds are not working
 				if (!string.IsNullOrEmpty(link.Id) )
 				{
 					if (link.FirstElementChild != null && link.FirstElementChild.ClassName == "source" && link.TagName == "FIGURE")
@@ -63,7 +64,6 @@ namespace Mdparser12
 								link.ReplaceWith(nodes.ToArray());
 							}
 						}
-						
 					}
 				}
 			}
